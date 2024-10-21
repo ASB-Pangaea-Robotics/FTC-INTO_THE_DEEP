@@ -27,6 +27,8 @@ public class CommandOpModeTest extends CommandOpMode {
 
     @Override
     public void initialize() {
+        robot.init(hardwareMap);
+
         gamepadEx.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenPressed(() -> schedule(new ExtensionCommand(extension, targetPosition)));
 

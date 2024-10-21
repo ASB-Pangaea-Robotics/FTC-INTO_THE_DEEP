@@ -26,6 +26,8 @@ public class ExtensionTest extends OpMode {
 
     @Override
     public void init() {
+        robot.init(hardwareMap);
+
         gamepadEx.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenPressed(new ExtensionCommand(extension, targetPosition));
 
