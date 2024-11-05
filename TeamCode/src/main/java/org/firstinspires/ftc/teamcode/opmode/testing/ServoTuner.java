@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.common.Globals;
 import org.firstinspires.ftc.teamcode.common.Hardware;
 import org.firstinspires.ftc.teamcode.common.subsystem.IntakeSubsystem;
 
@@ -32,9 +33,12 @@ public class ServoTuner extends OpMode {
         robot.intakeFourbarRight.setPosition(0);
 
         gamepadEx.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                .whenPressed(new InstantCommand(() -> intake.setFourbar(robot.intakeFourbarRight.getPosition() + 0.01)));
+                .whenPressed(new InstantCommand(() -> intake.setFourbar(robot.intakeFourbarRight.getPosition() + 0.02)));
         gamepadEx.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whenPressed(new InstantCommand(() -> intake.setFourbar(robot.intakeFourbarRight.getPosition() - 0.01)));
+                .whenPressed(new InstantCommand(() -> intake.setFourbar(robot.intakeFourbarRight.getPosition() - 0.02)));
+
+        gamepadEx.getGamepadButton(GamepadKeys.Button.X)
+                .whenPressed(new InstantCommand(() -> intake.setFourbar(Globals.FOURBAR_INTAKE+0.2)));
     }
 
     @Override
