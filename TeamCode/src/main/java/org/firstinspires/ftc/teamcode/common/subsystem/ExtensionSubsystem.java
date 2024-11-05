@@ -14,9 +14,9 @@ public class ExtensionSubsystem extends SubsystemBase {
 
     PIDController controller;
 
-    public static double kP = 0.035;
+    public static double kP = 0.011;
     public static double kI = 0.0;
-    public static double kD = 0.0008;
+    public static double kD = 0.0002;
 
     private int current = 0;
     public int target = 0;
@@ -35,12 +35,14 @@ public class ExtensionSubsystem extends SubsystemBase {
     }
 
     public void loop() {
+        if (target < current)
+            setMaxPower(0.5);
+        else if (target > current)
+            setMaxPower(0.3);
+
         controller.setPID(kP, kI, kD);
-        if (!atPosition()) {
-            power = controller.calculate(current, target);
-            power = Range.clip(power, -MAX_POWER, MAX_POWER);
-        } else
-            power = 0;
+        power = controller.calculate(current, target);
+        power = Range.clip(power, -MAX_POWER, MAX_POWER);
     }
 
     public void write() {
@@ -55,5 +57,9 @@ public class ExtensionSubsystem extends SubsystemBase {
 
     public boolean atPosition() {
         return Math.abs(target - current) < tolerance;
+    }
+
+    public void setMaxPower(double power) {
+        MAX_POWER = power;
     }
 }

@@ -5,13 +5,11 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.common.Globals;
 import org.firstinspires.ftc.teamcode.common.Hardware;
-import org.firstinspires.ftc.teamcode.common.command.subsystemcommand.ExtensionCommand;
 import org.firstinspires.ftc.teamcode.common.subsystem.ExtensionSubsystem;
 import org.firstinspires.ftc.teamcode.common.subsystem.IntakeSubsystem;
 
@@ -48,12 +46,12 @@ public class ExtensionTest extends OpMode {
     public void loop() {
 
         if (gamepad1.right_bumper) {
-            targetPosition=400;
+            targetPosition=450;
             extension.setTarget(targetPosition);
         }
 
         if (gamepad1.left_bumper) {
-            targetPosition=100;
+            targetPosition=50;
             extension.setTarget(targetPosition);
         }
 
