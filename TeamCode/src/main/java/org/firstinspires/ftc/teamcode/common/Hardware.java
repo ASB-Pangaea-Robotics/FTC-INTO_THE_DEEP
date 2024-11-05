@@ -17,9 +17,11 @@ public class Hardware {
             INSTANCE = new Hardware();
         return INSTANCE;
     }
-    // Extension variables
+
+    //Extension
     public MotorEx extensionMotor;
-    // Intake variables
+
+    //Intake
     public Servo intakeFourbarLeft;
     public Servo intakeFourbarRight;
 
@@ -28,28 +30,28 @@ public class Hardware {
 
     public DigitalChannel intakeBreak;
 
-    // Outtake variables
+    // Outtake
     public Servo outtakeClawServo;
 
     public void init(HardwareMap hardwareMap) {
-        // Extension Variables
+
+        //Extension Config
         extensionMotor = new MotorEx(hardwareMap, "extension");
         extensionMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         extensionMotor.resetEncoder();
-        // Intake Variables
-        intakeFourbarLeft = hardwareMap.get(Servo.class, "intakeFourbarLeft");
-        intakeFourbarRight = hardwareMap.get(Servo.class, "intakeFourbarRight");
-        intakeFourbarLeft.setDirection(Servo.Direction.REVERSE);
 
+        //Intake Config
         intakeLeft = hardwareMap.get(CRServo.class, "intakeLeft");
         intakeRight = hardwareMap.get(CRServo.class, "intakeRight");
         intakeRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        intakeFourbarLeft = hardwareMap.get(Servo.class, "intakeFourbarLeft");
+        intakeFourbarRight = hardwareMap.get(Servo.class, "intakeFourbarRight");
+        intakeFourbarLeft.setDirection(Servo.Direction.REVERSE);
+
         intakeBreak = hardwareMap.get(DigitalChannel.class, "intakeBreak");
 
-        //Outtake Variables
+        //Outtake Config
         outtakeClawServo = hardwareMap.get(Servo.class, "outtakeClawServo");
-
-
     }
 }
