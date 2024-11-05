@@ -12,7 +12,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
     private double intakePower = 1;
 
-    public static double leftChange = 1.8;
+    public static double leftMult = 1.5;
 
     public IntakeSubsystem() {
 
@@ -28,8 +28,13 @@ public class IntakeSubsystem extends SubsystemBase {
         robot.intakeRight.setPower(0);
     }
 
+    public void reverseIntake() {
+        robot.intakeLeft.setPower(-intakePower);
+        robot.intakeRight.setPower(-intakePower);
+    }
+
     public void setFourbar(double angle) {
-        robot.intakeFourbarLeft.setPosition(angle/leftChange);
+        robot.intakeFourbarLeft.setPosition(angle * leftMult);
         robot.intakeFourbarRight.setPosition(angle);
     }
 
