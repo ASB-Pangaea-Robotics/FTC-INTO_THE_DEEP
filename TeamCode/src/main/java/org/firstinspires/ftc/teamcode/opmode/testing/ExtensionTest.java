@@ -32,7 +32,7 @@ public class ExtensionTest extends OpMode {
         extension = new ExtensionSubsystem();
         intake = new IntakeSubsystem();
 
-        intake.setFourbar(Globals.FOURBAR_NUETRAL);
+        intake.setFourbar(Globals.INTAKE_FOURBAR_NUETRAL);
 
         gamepadEx = new GamepadEx(gamepad1);
 

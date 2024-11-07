@@ -3,13 +3,11 @@ package org.firstinspires.ftc.teamcode.opmode.testing;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.common.Globals;
 import org.firstinspires.ftc.teamcode.common.Hardware;
 import org.firstinspires.ftc.teamcode.common.subsystem.IntakeSubsystem;
@@ -38,7 +36,7 @@ public class ServoTuner extends OpMode {
                 .whenPressed(new InstantCommand(() -> intake.setFourbar(robot.intakeFourbarRight.getPosition() - 0.02)));
 
         gamepadEx.getGamepadButton(GamepadKeys.Button.X)
-                .whenPressed(new InstantCommand(() -> intake.setFourbar(Globals.FOURBAR_INTAKE+0.2)));
+                .whenPressed(new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_INTAKE +0.2)));
     }
 
     @Override

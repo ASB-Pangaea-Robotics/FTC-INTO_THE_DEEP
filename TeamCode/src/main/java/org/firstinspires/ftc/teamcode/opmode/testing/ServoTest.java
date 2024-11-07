@@ -29,14 +29,14 @@ public class ServoTest extends OpMode {
         gamepadEx = new GamepadEx(gamepad1);
 
         CommandScheduler.getInstance().schedule(
-                new InstantCommand(() -> intake.setFourbar(Globals.FOURBAR_NUETRAL)));
+                new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_NUETRAL)));
 
         gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_UP)
-                .whenPressed(new InstantCommand(() -> intake.setFourbar(Globals.FOURBAR_NUETRAL)));
+                .whenPressed(new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_NUETRAL)));
         gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
-                .whenPressed(new InstantCommand(() -> intake.setFourbar(Globals.FOURBAR_TRANSFER)));
+                .whenPressed(new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_TRANSFER)));
         gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
-                .whenPressed(new InstantCommand(() -> intake.setFourbar(Globals.FOURBAR_INTAKE)));
+                .whenPressed(new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_INTAKE)));
     }
 
     @Override

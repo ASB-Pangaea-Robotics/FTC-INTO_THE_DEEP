@@ -39,7 +39,7 @@ public class SoloTeleOp extends CommandOpMode {
 
         gamepadEx = new GamepadEx(gamepad1);
 
-        schedule(new InstantCommand(() -> intake.setFourbar(Globals.FOURBAR_NUETRAL)));
+        schedule(new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_NUETRAL)));
 
         gamepadEx.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenPressed(() -> schedule(new CloseIntakeCommand(intake, extension)));

@@ -31,7 +31,7 @@ public class IntakeSequenceTest extends OpMode {
         gamepadEx = new GamepadEx(gamepad1);
 
         CommandScheduler.getInstance().schedule(
-                new InstantCommand(() -> intake.setFourbar(Globals.FOURBAR_NUETRAL)));
+                new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_NUETRAL)));
 
         gamepadEx.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenPressed(() -> CommandScheduler.getInstance().schedule(new CloseIntakeCommand(intake, extension)));
