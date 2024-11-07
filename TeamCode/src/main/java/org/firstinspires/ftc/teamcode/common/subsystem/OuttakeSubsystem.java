@@ -15,4 +15,8 @@ public class OuttakeSubsystem extends SubsystemBase {
     public void closeClaw() {
         robot.outtakeClaw.setPosition(Globals.OUTTAKE_CLAW_CLOSED);
     }
+
+    public void setFourbar(double position) {
+        robot.outtakeFourbar.setPosition(position);
+    }
 }
