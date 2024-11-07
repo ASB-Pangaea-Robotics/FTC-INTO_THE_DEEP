@@ -31,7 +31,9 @@ public class Hardware {
     public DigitalChannel intakeBreak;
 
     // Outtake
-    public Servo outtakeClawServo;
+    public Servo outtakeClaw;
+    public Servo outtakeFourbar;
+    public Servo outtakeEndEffector;
 
     public void init(HardwareMap hardwareMap) {
 
@@ -52,6 +54,8 @@ public class Hardware {
         intakeBreak = hardwareMap.get(DigitalChannel.class, "intakeBreak");
 
         //Outtake Config
-        outtakeClawServo = hardwareMap.get(Servo.class, "outtakeClawServo");
+        outtakeClaw = hardwareMap.get(Servo.class, "outtakeClawServo");
+        outtakeFourbar = hardwareMap.get(Servo.class, "outtakeFourbar");
+        outtakeEndEffector = hardwareMap.get(Servo.class, "outtakeEndEffector");
     }
 }
