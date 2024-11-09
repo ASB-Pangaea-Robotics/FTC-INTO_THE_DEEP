@@ -61,6 +61,11 @@ public class SoloTeleOp extends CommandOpMode {
     public void run() {
         super.run();
 
+        robot.leftFront.setPower(-gamepadEx.getLeftY());
+        robot.rightFront.setPower(-gamepadEx.getRightY());
+        robot.leftBack.setPower(-gamepadEx.getLeftY());
+        robot.rightBack.setPower(-gamepadEx.getRightY());
+
         extension.read();
         extension.loop();
         extension.write();
