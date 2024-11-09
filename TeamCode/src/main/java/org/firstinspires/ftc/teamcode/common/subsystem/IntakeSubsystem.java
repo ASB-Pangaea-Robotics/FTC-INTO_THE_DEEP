@@ -11,9 +11,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private Hardware robot = Hardware.getInstance();
 
     private double intakePower = 1;
-
-    public static double leftMult = 1.5;
-
+    
     public IntakeSubsystem() {
 
     }
@@ -34,7 +32,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void setFourbar(double angle) {
-        robot.intakeFourbarLeft.setPosition(angle * leftMult);
+        robot.intakeFourbarLeft.setPosition(angle);
         robot.intakeFourbarRight.setPosition(angle);
     }
 
