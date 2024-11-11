@@ -19,4 +19,8 @@ public class OuttakeSubsystem extends SubsystemBase {
     public void setFourbar(double position) {
         robot.outtakeFourbar.setPosition(position);
     }
+
+    public void setWrist(double position) {
+        robot.outtakeWrist.setPosition(position);
+    }
 }

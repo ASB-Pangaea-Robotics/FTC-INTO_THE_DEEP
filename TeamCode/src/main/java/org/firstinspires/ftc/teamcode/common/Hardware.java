@@ -4,7 +4,6 @@ import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -41,7 +40,7 @@ public class Hardware {
     // Outtake
     public Servo outtakeClaw;
     public Servo outtakeFourbar;
-    public Servo outtakeEndEffector;
+    public Servo outtakeWrist;
 
     public void init(HardwareMap hardwareMap) {
 
