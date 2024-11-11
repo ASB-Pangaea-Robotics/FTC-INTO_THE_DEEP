@@ -11,10 +11,13 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import org.firstinspires.ftc.teamcode.common.Globals;
 import org.firstinspires.ftc.teamcode.common.Hardware;
 import org.firstinspires.ftc.teamcode.common.command.commoncommand.ExpelCommand;
+import org.firstinspires.ftc.teamcode.common.command.commoncommand.TransferCommand;
 import org.firstinspires.ftc.teamcode.common.command.subsystemcommand.ExtensionCommand;
 import org.firstinspires.ftc.teamcode.common.command.commoncommand.CloseIntakeCommand;
 import org.firstinspires.ftc.teamcode.common.subsystem.ExtensionSubsystem;
 import org.firstinspires.ftc.teamcode.common.subsystem.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.common.subsystem.OuttakeSubsystem;
+
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @Config
@@ -27,6 +30,7 @@ public class SoloTeleOp extends CommandOpMode {
 
     IntakeSubsystem intake;
     ExtensionSubsystem extension;
+    OuttakeSubsystem outtake;
 
     GamepadEx gamepadEx;
 
@@ -36,6 +40,7 @@ public class SoloTeleOp extends CommandOpMode {
 
         extension = new ExtensionSubsystem();
         intake = new IntakeSubsystem();
+        outtake = new OuttakeSubsystem();
 
         gamepadEx = new GamepadEx(gamepad1);
 
@@ -45,6 +50,9 @@ public class SoloTeleOp extends CommandOpMode {
                 .whenPressed(() -> schedule(new CloseIntakeCommand(intake, extension)));
         gamepadEx.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenPressed(() -> schedule(new ExpelCommand(intake)));
+        gamepadEx.getGamepadButton(GamepadKeys.Button.A)
+                .whenPressed(() -> schedule(new TransferCommand(intake, outtake)));
+
         gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
                 .whenPressed(() -> schedule(new ExtensionCommand(extension, 0)));
         gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
@@ -53,6 +61,7 @@ public class SoloTeleOp extends CommandOpMode {
                 .whenPressed(() -> schedule(new ExtensionCommand(extension, 300)));
         gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
                 .whenPressed(() -> schedule(new ExtensionCommand(extension, 450)));
+
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
