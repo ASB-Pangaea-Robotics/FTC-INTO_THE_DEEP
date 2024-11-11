@@ -5,6 +5,7 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.common.Globals;
 import org.firstinspires.ftc.teamcode.common.Hardware;
 
 @Config
@@ -35,10 +36,17 @@ public class ExtensionSubsystem extends SubsystemBase {
     }
 
     public void loop() {
-        if (target < current)
-            setMaxPower(0.5);
-        else if (target > current)
-            setMaxPower(0.3);
+        if (Globals.IS_INTAKING) {
+            if (target < current)
+                setMaxPower(0.5);
+            else if (target > current)
+                setMaxPower(0.3);
+        } else {
+            if (target < current)
+                setMaxPower(0.75);
+            else if (target > current)
+                setMaxPower(0.5);
+        }
 
         controller.setPID(kP, kI, kD);
         power = controller.calculate(current, target);

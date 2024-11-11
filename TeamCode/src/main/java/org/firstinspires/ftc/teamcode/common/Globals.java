@@ -4,6 +4,8 @@ import com.acmerobotics.dashboard.config.Config;
 
 @Config
 public class Globals {
+    public static boolean IS_INTAKING = false;
+
     public static double INTAKE_FOURBAR_NUETRAL = 0.2;
     public static double INTAKE_FOURBAR_INTAKE = 0.045;
     public static double INTAKE_FOURBAR_TRANSFER = 0.265;

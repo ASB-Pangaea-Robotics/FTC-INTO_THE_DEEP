@@ -14,9 +14,11 @@ public class CloseIntakeCommand extends SequentialCommandGroup {
     public CloseIntakeCommand(IntakeSubsystem intake, ExtensionSubsystem extension) {
         if (!intake.hasSample()) {
             addCommands(
+                    new InstantCommand(() -> Globals.IS_INTAKING = false),
                     new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_INTAKE)),
                     new InstantCommand(intake::runIntake),
                     new WaitUntilCommand(intake::hasSample),
+                    new InstantCommand(() -> Globals.IS_INTAKING = false),
                     new WaitCommand(10),
                     new InstantCommand(intake::stopIntake),
                     new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_NUETRAL)),
