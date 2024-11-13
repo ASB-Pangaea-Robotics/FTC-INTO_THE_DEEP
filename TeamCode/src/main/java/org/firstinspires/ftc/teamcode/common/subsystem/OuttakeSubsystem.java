@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode.common.subsystem;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDController;
+import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.Globals;
 import org.firstinspires.ftc.teamcode.common.Hardware;
 
@@ -44,13 +44,26 @@ public class OuttakeSubsystem extends SubsystemBase {
         robot.outtakeWrist.setPosition(position);
     }
 
-    public void setLift(){}
+    public void setTarget(int target) {
+        this.target = target;
+    }
 
     public void read() {
-        if (Math.abs(robot.outtakeLiftBottom.getCurrentPosition() - robot.outtakeLiftTop.getCurrentPosition()) < 4.0){
-            current = robot.outtakeLiftBottom.getCurrentPosition();
-        } else{
-            Telemetry.Log.add("MOTORS AREN'T ALIGNED!!!!");
-        }
+        current = robot.outtakeLiftBottom.getCurrentPosition();
+    }
+
+    public void loop() {
+        controller.setPID(kP, kI, kD);
+        power = controller.calculate(current, target);
+        power = Range.clip(power, -MAX_POWER, MAX_POWER);
+    }
+
+    public void write() {
+        robot.outtakeLiftBottom.set(power);
+        robot.outtakeLiftTop.set(power);
+    }
+
+    public boolean atPosition() {
+        return Math.abs(target - current) < tolerance;
     }
 }

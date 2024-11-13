@@ -22,7 +22,6 @@ public class Hardware {
     }
 
 
-
     //Drivetrain
     public DcMotor leftFront;
     public DcMotor rightFront;
@@ -45,8 +44,8 @@ public class Hardware {
     public Servo outtakeClaw;
     public Servo outtakeFourbar;
     public Servo outtakeWrist;
-    public DcMotor outtakeLiftTop;
-    public DcMotor outtakeLiftBottom;
+    public MotorEx outtakeLiftTop;
+    public MotorEx outtakeLiftBottom;
 
     public void init(HardwareMap hardwareMap) {
 
@@ -65,7 +64,7 @@ public class Hardware {
         //Extension Config
         extensionMotor = new MotorEx(hardwareMap, "extension");
         extensionMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-        extensionMotor.resetEncoder();
+
 
         //Intake Config
         intakeLeft = hardwareMap.get(CRServo.class, "intakeLeft");
@@ -78,12 +77,23 @@ public class Hardware {
 
         intakeBreak = hardwareMap.get(DigitalChannel.class, "intakeBreak");
 
+
         //Outtake Config
 //        outtakeClaw = hardwareMap.get(Servo.class, "outtakeClawServo");
 //        outtakeFourbar = hardwareMap.get(Servo.class, "outtakeFourbar");
-        outtakeLiftTop = hardwareMap.get(DcMotor.class, "outtakeLiftTop");
-        outtakeLiftBottom = hardwareMap.get(DcMotor.class, "outtakeLiftBottom");
-//        outtakeLiftBottom.  (Needs to be reversed somehow????)
-//        outtakeEndEffector = hardwareMap.get(Servo.class, "outtakeEndEffector");
+//        outtakeWrist = hardwareMap.get(Servo.class, "outtakeEndEffector");
+//        outtakeLiftTop = new MotorEx(hardwareMap, "outtakeLiftTop");
+//        outtakeLiftBottom = new MotorEx(hardwareMap, "outtakeLiftBottom");
+//        outtakeLiftTop.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+//        outtakeLiftBottom.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+//        outtakeLiftTop.setInverted(true);
+    }
+
+    public void resetExtension() {
+        extensionMotor.resetEncoder();
+    }
+
+    public void resetLift() {
+        outtakeLiftTop.resetEncoder();
     }
 }
