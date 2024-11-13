@@ -70,4 +70,8 @@ public class ExtensionSubsystem extends SubsystemBase {
     public void setMaxPower(double power) {
         MAX_POWER = power;
     }
+
+    public int getCurrent() {
+        return current;
+    }
 }

@@ -6,6 +6,6 @@ import org.firstinspires.ftc.teamcode.common.subsystem.OuttakeSubsystem;
 
 public class LiftCommand extends InstantCommand {
     LiftCommand(OuttakeSubsystem outtake, int target) {
-        super(() -> outtake.setTarget(target));
+        super(() -> outtake.setLiftTarget(target));
     }
 }

@@ -20,8 +20,8 @@ public class OuttakeSubsystem extends SubsystemBase {
     public static double kI = 0.0;
     public static double kD = 0.0;
 
-    private int current = 0;
-    public int target = 0;
+    private int liftCurrent = 0;
+    public int liftTarget = 0;
 
     private final int tolerance = 0;
 
@@ -44,17 +44,17 @@ public class OuttakeSubsystem extends SubsystemBase {
         robot.outtakeWrist.setPosition(position);
     }
 
-    public void setTarget(int target) {
-        this.target = target;
+    public void setLiftTarget(int liftTarget) {
+        this.liftTarget = liftTarget;
     }
 
     public void read() {
-        current = robot.outtakeLiftBottom.getCurrentPosition();
+        liftCurrent = robot.outtakeLiftBottom.getCurrentPosition();
     }
 
     public void loop() {
         controller.setPID(kP, kI, kD);
-        power = controller.calculate(current, target);
+        power = controller.calculate(liftCurrent, liftTarget);
         power = Range.clip(power, -MAX_POWER, MAX_POWER);
     }
 
@@ -64,6 +64,6 @@ public class OuttakeSubsystem extends SubsystemBase {
     }
 
     public boolean atPosition() {
-        return Math.abs(target - current) < tolerance;
+        return Math.abs(liftTarget - liftCurrent) < tolerance;
     }
 }
