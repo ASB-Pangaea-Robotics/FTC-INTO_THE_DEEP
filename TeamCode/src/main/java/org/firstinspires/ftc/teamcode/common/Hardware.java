@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class Hardware {
 
     private static Hardware INSTANCE;
@@ -18,6 +20,8 @@ public class Hardware {
             INSTANCE = new Hardware();
         return INSTANCE;
     }
+
+
 
     //Drivetrain
     public DcMotor leftFront;
@@ -41,6 +45,8 @@ public class Hardware {
     public Servo outtakeClaw;
     public Servo outtakeFourbar;
     public Servo outtakeWrist;
+    public DcMotor outtakeLiftTop;
+    public DcMotor outtakeLiftBottom;
 
     public void init(HardwareMap hardwareMap) {
 
@@ -75,6 +81,9 @@ public class Hardware {
         //Outtake Config
 //        outtakeClaw = hardwareMap.get(Servo.class, "outtakeClawServo");
 //        outtakeFourbar = hardwareMap.get(Servo.class, "outtakeFourbar");
+        outtakeLiftTop = hardwareMap.get(DcMotor.class, "outtakeLiftTop");
+        outtakeLiftBottom = hardwareMap.get(DcMotor.class, "outtakeLiftBottom");
+//        outtakeLiftBottom.  (Needs to be reversed somehow????)
 //        outtakeEndEffector = hardwareMap.get(Servo.class, "outtakeEndEffector");
     }
 }
