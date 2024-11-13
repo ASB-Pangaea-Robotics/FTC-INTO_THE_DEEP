@@ -5,11 +5,13 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.common.Globals;
 import org.firstinspires.ftc.teamcode.common.Hardware;
+import org.firstinspires.ftc.teamcode.common.command.subsystemcommand.ExtensionCommand;
 import org.firstinspires.ftc.teamcode.common.subsystem.ExtensionSubsystem;
 import org.firstinspires.ftc.teamcode.common.subsystem.IntakeSubsystem;
 
@@ -36,24 +38,16 @@ public class ExtensionTest extends OpMode {
 
         gamepadEx = new GamepadEx(gamepad1);
 
-//        gamepadEx.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-//                .whenPressed(new ExtensionCommand(extension, targetPosition));
+        gamepadEx.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+                .whenPressed(new ExtensionCommand(extension, extension.getCurrent() + 25));
+        gamepadEx.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+                .whenPressed(new ExtensionCommand(extension, extension.getCurrent() - 25));
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
     @Override
     public void loop() {
-
-        if (gamepad1.right_bumper) {
-            targetPosition=450;
-            extension.setTarget(targetPosition);
-        }
-
-        if (gamepad1.left_bumper) {
-            targetPosition=50;
-            extension.setTarget(targetPosition);
-        }
 
         extension.read();
         CommandScheduler.getInstance().run();
