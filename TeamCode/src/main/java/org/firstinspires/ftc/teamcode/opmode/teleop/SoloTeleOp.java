@@ -83,6 +83,8 @@ public class SoloTeleOp extends CommandOpMode {
         telemetry.addData("Current Position", robot.extensionMotor.getCurrentPosition());
         telemetry.addData("At Position", extension.atPosition());
 
+        telemetry.addData("Is Intaking", Globals.IS_INTAKING);
+
         double loop = System.nanoTime();
         telemetry.addData("hz", 1000000000 / (loop - lastLoop));
         lastLoop = loop;

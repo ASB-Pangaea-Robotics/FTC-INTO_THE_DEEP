@@ -43,7 +43,7 @@ public class ExtensionSubsystem extends SubsystemBase {
                 setMaxPower(0.3);
         } else {
             if (target < current)
-                setMaxPower(0.75);
+                setMaxPower(0.6);
             else if (target > current)
                 setMaxPower(0.5);
         }
