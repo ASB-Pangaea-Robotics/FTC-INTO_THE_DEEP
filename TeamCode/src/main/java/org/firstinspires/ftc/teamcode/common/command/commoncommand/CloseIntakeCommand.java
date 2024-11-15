@@ -7,6 +7,7 @@ import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
 import org.firstinspires.ftc.teamcode.common.Globals;
 import org.firstinspires.ftc.teamcode.common.command.subsystemcommand.ExtensionCommand;
+import org.firstinspires.ftc.teamcode.common.command.teleopcommand.RetractIntakeCommand;
 import org.firstinspires.ftc.teamcode.common.subsystem.ExtensionSubsystem;
 import org.firstinspires.ftc.teamcode.common.subsystem.IntakeSubsystem;
 
@@ -21,9 +22,7 @@ public class CloseIntakeCommand extends SequentialCommandGroup {
                     new InstantCommand(() -> Globals.IS_INTAKING = false),
                     new WaitCommand(10),
                     new InstantCommand(intake::stopIntake),
-                    new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_NUETRAL)),
-                    new WaitCommand(300),
-                    new ExtensionCommand(extension, 0)
+                    new RetractIntakeCommand(extension, intake)
             );
         }
     }

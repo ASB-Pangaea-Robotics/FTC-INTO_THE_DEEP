@@ -13,7 +13,7 @@ public class RetractIntakeCommand extends SequentialCommandGroup {
     public RetractIntakeCommand(ExtensionSubsystem extension, IntakeSubsystem intake) {
         addCommands(
                 new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_NUETRAL)),
-                new WaitCommand(250),
+                new WaitCommand(300),
                 new ExtensionCommand(extension, 0)
         );
     }
