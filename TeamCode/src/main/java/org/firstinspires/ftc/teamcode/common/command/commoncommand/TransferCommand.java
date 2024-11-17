@@ -14,15 +14,18 @@ public class TransferCommand extends SequentialCommandGroup {
         if (intake.hasSample()) {
             addCommands(
                     new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_TRANSFER)),
-                    new InstantCommand(() -> outtake.setFourbar(Globals.OUTTAKE_FOURBAR_TRANSFER)),
                     new WaitCommand(500),
-                    new InstantCommand(outtake::openClaw),
                     new InstantCommand(intake::runIntake),
-                    new WaitUntilCommand(() -> !intake.hasSample()),
-                    new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_NUETRAL)),
                     new WaitCommand(500),
-                    new InstantCommand(outtake::closeClaw),
+                    new InstantCommand(intake::stopIntake),
+                    new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_NUETRAL)),
+                    new WaitCommand(700),
+                    new InstantCommand(outtake::openClaw),
                     new WaitCommand(200),
+                    new InstantCommand(() -> outtake.setFourbar(Globals.OUTTAKE_FOURBAR_TRANSFER)),
+                    new WaitCommand(400),
+                    new InstantCommand(outtake::closeClaw),
+                    new WaitCommand(300),
                     new InstantCommand(() -> outtake.setFourbar(Globals.OUTTAKE_FOURBAR_NUETRAL))
             );
         }

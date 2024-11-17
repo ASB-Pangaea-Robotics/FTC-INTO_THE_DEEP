@@ -20,7 +20,6 @@ public class CloseIntakeCommand extends SequentialCommandGroup {
                     new InstantCommand(intake::runIntake),
                     new WaitUntilCommand(intake::hasSample),
                     new InstantCommand(() -> Globals.IS_INTAKING = false),
-                    new WaitCommand(10),
                     new InstantCommand(intake::stopIntake),
                     new RetractIntakeCommand(extension, intake)
             );
