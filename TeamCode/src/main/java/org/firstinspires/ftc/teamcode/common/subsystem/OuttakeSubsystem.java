@@ -13,20 +13,70 @@ import org.firstinspires.ftc.teamcode.common.Hardware;
 public class OuttakeSubsystem extends SubsystemBase {
     private Hardware robot = Hardware.getInstance();
 
+    public enum OuttakePosition {
+        NUETRAL,
+        TRANSFER,
+        BASKET,
+        SPECIMEN
+    }
+
     // Lift systems
     private PIDController controller;
 
-    public static double kP = 0.0;
+    public static double kP = 0.0085;
     public static double kI = 0.0;
     public static double kD = 0.0;
+    public static double kG = 0.002;
 
     private int liftCurrent = 0;
     public int liftTarget = 0;
 
     private final int tolerance = 0;
 
-    private double power = 0.0;
-    private double MAX_POWER = 0.0;
+    public double power = 0.0;
+    private double MAX_POWER = 1;
+
+    public OuttakeSubsystem() {
+        controller = new PIDController(kP, kI, kD);
+    }
+
+    public void read() {
+        liftCurrent = robot.outtakeLiftBottom.getCurrentPosition();
+    }
+
+    public void loop() {
+        controller.setPID(kP, kI, kD);
+        power = controller.calculate(liftCurrent, liftTarget) + kG;
+        power = Range.clip(power, -MAX_POWER, MAX_POWER);
+    }
+
+    public void write() {
+        robot.outtakeLiftBottom.set(power);
+        robot.outtakeLiftTop.set(power);
+    }
+
+    public void setPosition(OuttakePosition position) {
+        switch (position) {
+            case NUETRAL:
+                setFourbar(Globals.OUTTAKE_FOURBAR_NUETRAL);
+                setWrist(Globals.OUTTAKE_WRIST_NUETRAL);
+                break;
+
+            case TRANSFER:
+                setFourbar(Globals.OUTTAKE_FOURBAR_TRANSFER);
+                setWrist(Globals.OUTTAKE_WRIST_NUETRAL);
+                break;
+
+            case BASKET:
+                setFourbar(Globals.OUTTAKE_FOURBAR_BASKET);
+                setWrist(Globals.OUTTAKE_WRIST_BASKET);
+                break;
+
+            case SPECIMEN:
+                setFourbar(Globals.OUTTAKE_FOURBAR_SPECIMEN);
+                setWrist(Globals.OUTTAKE_WRIST_SPECIMEN);
+        }
+    }
 
     public void openClaw() {
         robot.outtakeClaw.setPosition(Globals.OUTTAKE_CLAW_OPEN);
@@ -48,19 +98,8 @@ public class OuttakeSubsystem extends SubsystemBase {
         this.liftTarget = liftTarget;
     }
 
-    public void read() {
-        liftCurrent = robot.outtakeLiftBottom.getCurrentPosition();
-    }
-
-    public void loop() {
-        controller.setPID(kP, kI, kD);
-        power = controller.calculate(liftCurrent, liftTarget);
-        power = Range.clip(power, -MAX_POWER, MAX_POWER);
-    }
-
-    public void write() {
-        robot.outtakeLiftBottom.set(power);
-        robot.outtakeLiftTop.set(power);
+    public int getLiftPosition() {
+        return liftCurrent;
     }
 
     public boolean atPosition() {

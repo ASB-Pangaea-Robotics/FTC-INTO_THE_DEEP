@@ -17,7 +17,7 @@ public class ExtensionSubsystem extends SubsystemBase {
 
     public static double kP = 0.011;
     public static double kI = 0.0;
-    public static double kD = 0.0002;
+    public static double kD = 0.0006;
 
     private int current = 0;
     public int target = 0;
