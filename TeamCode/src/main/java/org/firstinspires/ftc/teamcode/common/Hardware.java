@@ -79,14 +79,19 @@ public class Hardware {
 
 
         //Outtake Config
-//        outtakeClaw = hardwareMap.get(Servo.class, "outtakeClawServo");
-//        outtakeFourbar = hardwareMap.get(Servo.class, "outtakeFourbar");
-//        outtakeWrist = hardwareMap.get(Servo.class, "outtakeEndEffector");
-//        outtakeLiftTop = new MotorEx(hardwareMap, "outtakeLiftTop");
-//        outtakeLiftBottom = new MotorEx(hardwareMap, "outtakeLiftBottom");
+        outtakeClaw = hardwareMap.get(Servo.class, "outtakeClaw");
+        outtakeFourbar = hardwareMap.get(Servo.class, "outtakeFourbar");
+        outtakeWrist = hardwareMap.get(Servo.class, "outtakeWrist");
+
+        outtakeWrist.setDirection(Servo.Direction.REVERSE);
+
+        outtakeLiftTop = new MotorEx(hardwareMap, "outtakeLiftTop");
+        outtakeLiftBottom = new MotorEx(hardwareMap, "outtakeLiftBottom");
+
 //        outtakeLiftTop.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 //        outtakeLiftBottom.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-//        outtakeLiftTop.setInverted(true);
+
+        outtakeLiftBottom.setInverted(true);
     }
 
     public void resetExtension() {
@@ -94,6 +99,6 @@ public class Hardware {
     }
 
     public void resetLift() {
-        outtakeLiftTop.resetEncoder();
+        outtakeLiftBottom.resetEncoder();
     }
 }
