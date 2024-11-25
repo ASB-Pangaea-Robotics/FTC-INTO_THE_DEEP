@@ -42,9 +42,10 @@ public class SoloTeleOp extends CommandOpMode {
     public void initialize() {
         robot.init(hardwareMap);
 
-        //DELETE LATER
+        //DELETE LATER=======
         robot.resetExtension();
         robot.resetLift();
+        //===================
 
         extension = new ExtensionSubsystem();
         intake = new IntakeSubsystem();
@@ -74,10 +75,10 @@ public class SoloTeleOp extends CommandOpMode {
                         .whenPressed(() -> schedule(
                                 new SequentialCommandGroup(
                                         new InstantCommand(outtake::openClaw),
-                                        new WaitCommand(500),
+                                        new WaitCommand(300),
                                         new InstantCommand(() -> outtake.setPosition(OuttakeSubsystem.OuttakePosition.NUETRAL)),
                                         new WaitCommand(300),
-                                        new LiftCommand(outtake, 5),
+                                        new LiftCommand(outtake, 0),
                                         new InstantCommand(outtake::closeClaw)
                                 )));
 
@@ -114,6 +115,12 @@ public class SoloTeleOp extends CommandOpMode {
 
         gamepadEx.getGamepadButton(GamepadKeys.Button.START)
                 .whenPressed(() -> schedule(new ResetCommand(intake, extension, outtake)));
+        gamepadEx.getGamepadButton(GamepadKeys.Button.BACK)
+                .whenPressed(() -> schedule(new SequentialCommandGroup(
+                        new ExtensionCommand(extension, -1000),
+                        new WaitCommand(1000),
+                        new InstantCommand(() -> robot.resetExtension())
+                )));
 
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());

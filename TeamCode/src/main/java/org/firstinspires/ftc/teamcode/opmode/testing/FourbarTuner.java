@@ -39,24 +39,24 @@ public class FourbarTuner extends OpMode {
 //        gamepadEx.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
 //                .whenPressed(new InstantCommand(() -> outtake.setFourbar(robot.outtakeFourbar.getPosition() - 0.02)));
 //
-//        gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_UP)
-//                .whenPressed(new InstantCommand(() -> robot.outtakeWrist.setPosition(robot.outtakeWrist.getPosition() + 0.02)));
-//        gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
-//                .whenPressed(new InstantCommand(() -> robot.outtakeWrist.setPosition(robot.outtakeWrist.getPosition() - 0.02)));
-
         gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_UP)
-                .whenPressed(new InstantCommand(() -> outtake.setFourbar(Globals.OUTTAKE_FOURBAR_BASKET))
-                        .alongWith(new InstantCommand(() -> outtake.setWrist(Globals.OUTTAKE_WRIST_BASKET))));
+                .whenPressed(new InstantCommand(() -> robot.outtakeWrist.setPosition(robot.outtakeWrist.getPosition() + 0.02)));
         gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
-                .whenPressed(new InstantCommand(() -> outtake.setWrist(Globals.OUTTAKE_WRIST_NUETRAL))
-                        .alongWith(new WaitCommand(100)
-                                .andThen(new InstantCommand(() -> outtake.setFourbar(Globals.OUTTAKE_FOURBAR_TRANSFER)))));
-        gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
-                .whenPressed(new InstantCommand(() -> outtake.setFourbar(Globals.OUTTAKE_FOURBAR_SPECIMEN))
-                        .alongWith(new InstantCommand(() -> outtake.setWrist(Globals.OUTTAKE_WRIST_SPECIMEN))));
-        gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
-                .whenPressed(new InstantCommand(() -> outtake.setFourbar(Globals.OUTTAKE_FOURBAR_NUETRAL))
-                        .alongWith(new InstantCommand(() -> outtake.setWrist(Globals.OUTTAKE_WRIST_NUETRAL))));
+                .whenPressed(new InstantCommand(() -> robot.outtakeWrist.setPosition(robot.outtakeWrist.getPosition() - 0.02)));
+
+//        gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+//                .whenPressed(new InstantCommand(() -> outtake.setFourbar(Globals.OUTTAKE_FOURBAR_BASKET))
+//                        .alongWith(new InstantCommand(() -> outtake.setWrist(Globals.OUTTAKE_WRIST_BASKET))));
+//        gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+//                .whenPressed(new InstantCommand(() -> outtake.setWrist(Globals.OUTTAKE_WRIST_NUETRAL))
+//                        .alongWith(new WaitCommand(100)
+//                                .andThen(new InstantCommand(() -> outtake.setFourbar(Globals.OUTTAKE_FOURBAR_TRANSFER)))));
+//        gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
+//                .whenPressed(new InstantCommand(() -> outtake.setFourbar(Globals.OUTTAKE_FOURBAR_SPECIMEN))
+//                        .alongWith(new InstantCommand(() -> outtake.setWrist(Globals.OUTTAKE_WRIST_SPECIMEN))));
+//        gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
+//                .whenPressed(new InstantCommand(() -> outtake.setFourbar(Globals.OUTTAKE_FOURBAR_NUETRAL))
+//                        .alongWith(new InstantCommand(() -> outtake.setWrist(Globals.OUTTAKE_WRIST_NUETRAL))));
     }
 
     @Override
