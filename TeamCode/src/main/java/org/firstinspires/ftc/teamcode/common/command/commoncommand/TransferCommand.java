@@ -21,7 +21,7 @@ public class TransferCommand extends SequentialCommandGroup {
                                 new WaitCommand(500),
                                 new InstantCommand(intake::stopIntake),
                                 new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_NUETRAL)),
-                                new WaitCommand(700)
+                                new WaitCommand(200)
                         ),
                         new WaitCommand(0),
                         intake::hasSample

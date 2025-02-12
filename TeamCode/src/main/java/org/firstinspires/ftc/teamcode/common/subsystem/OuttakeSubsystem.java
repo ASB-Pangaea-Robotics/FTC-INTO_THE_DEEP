@@ -31,7 +31,7 @@ public class OuttakeSubsystem extends SubsystemBase {
     private int liftCurrent = 0;
     public int liftTarget = 0;
 
-    private final int tolerance = 0;
+    private final int tolerance = 6;
 
     public double power = 0.0;
     private double MAX_POWER = 1;
@@ -51,8 +51,10 @@ public class OuttakeSubsystem extends SubsystemBase {
     }
 
     public void write() {
-        robot.outtakeLiftBottom.set(power);
-        robot.outtakeLiftTop.set(power);
+        if (!atPosition()) {
+            robot.outtakeLiftBottom.set(power);
+            robot.outtakeLiftTop.set(power);
+        }
     }
 
     public void setPosition(OuttakePosition position) {
@@ -103,6 +105,6 @@ public class OuttakeSubsystem extends SubsystemBase {
     }
 
     public boolean atPosition() {
-        return Math.abs(liftTarget - liftCurrent) < tolerance;
+        return Math.abs(liftTarget - liftCurrent) <= tolerance;
     }
 }

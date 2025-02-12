@@ -36,16 +36,18 @@ public class ExtensionSubsystem extends SubsystemBase {
     }
 
     public void loop() {
-        if (Globals.IS_INTAKING) {
-            if (target < current)
-                setMaxPower(0.5);
-            else if (target > current)
-                setMaxPower(0.3);
-        } else {
-            if (target < current)
-                setMaxPower(0.6);
-            else if (target > current)
-                setMaxPower(0.5);
+        if (!atPosition()) {
+            if (Globals.IS_INTAKING) {
+                if (target < current)
+                    setMaxPower(0.5);
+                else if (target > current)
+                    setMaxPower(0.3);
+            } else {
+                if (target < current)
+                    setMaxPower(0.6);
+                else if (target > current)
+                    setMaxPower(0.5);
+            }
         }
 
         controller.setPID(kP, kI, kD);

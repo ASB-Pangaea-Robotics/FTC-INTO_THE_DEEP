@@ -28,8 +28,8 @@ public class ServoTest extends OpMode {
 
         gamepadEx = new GamepadEx(gamepad1);
 
-        CommandScheduler.getInstance().schedule(
-                new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_NUETRAL)));
+        robot.intakeFourbarLeft.setPosition(0);
+        robot.intakeFourbarRight.setPosition(0);
 
         gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_UP)
                 .whenPressed(new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_NUETRAL)));

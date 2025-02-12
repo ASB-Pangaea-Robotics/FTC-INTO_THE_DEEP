@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -23,10 +24,10 @@ public class Hardware {
 
 
     //Drivetrain
-    public DcMotor leftFront;
-    public DcMotor rightFront;
-    public DcMotor leftBack;
-    public DcMotor rightBack;
+    public DcMotorEx leftFront;
+    public DcMotorEx rightFront;
+    public DcMotorEx leftBack;
+    public DcMotorEx rightBack;
 
     //Extension
     public MotorEx extensionMotor;
@@ -50,15 +51,15 @@ public class Hardware {
     public void init(HardwareMap hardwareMap) {
 
         //Drivetrain Config
-        leftFront = hardwareMap.get(DcMotor.class, "leftFront");
-        rightFront = hardwareMap.get(DcMotor.class, "rightFront");
-        leftBack = hardwareMap.get(DcMotor.class, "leftBack");
-        rightBack = hardwareMap.get(DcMotor.class, "rightBack");
-
-        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
+//        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+//        leftBack = hardwareMap.get(DcMotorEx.class, "leftBack");
+//        rightBack = hardwareMap.get(DcMotorEx.class, "rightBack");
+//
+//        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         //Extension Config
@@ -69,7 +70,6 @@ public class Hardware {
         //Intake Config
         intakeLeft = hardwareMap.get(CRServo.class, "intakeLeft");
         intakeRight = hardwareMap.get(CRServo.class, "intakeRight");
-        intakeRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         intakeFourbarLeft = hardwareMap.get(Servo.class, "intakeFourbarLeft");
         intakeFourbarRight = hardwareMap.get(Servo.class, "intakeFourbarRight");
@@ -88,8 +88,8 @@ public class Hardware {
         outtakeLiftTop = new MotorEx(hardwareMap, "outtakeLiftTop");
         outtakeLiftBottom = new MotorEx(hardwareMap, "outtakeLiftBottom");
 
-//        outtakeLiftTop.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-//        outtakeLiftBottom.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        outtakeLiftTop.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        outtakeLiftBottom.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 
         outtakeLiftBottom.setInverted(true);
     }

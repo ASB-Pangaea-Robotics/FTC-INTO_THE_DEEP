@@ -21,7 +21,11 @@ import org.firstinspires.ftc.teamcode.common.command.teleopcommand.ResetCommand;
 import org.firstinspires.ftc.teamcode.common.subsystem.ExtensionSubsystem;
 import org.firstinspires.ftc.teamcode.common.subsystem.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.common.subsystem.OuttakeSubsystem;
+import org.firstinspires.ftc.teamcode.pedropathing.constants.FConstants;
+import org.firstinspires.ftc.teamcode.pedropathing.constants.LConstants;
 
+import com.pedropathing.follower.Follower;
+import com.pedropathing.util.Constants;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @Config
@@ -32,6 +36,8 @@ public class SoloTeleOp extends CommandOpMode {
 
     Hardware robot = Hardware.getInstance();
 
+    Follower follower;
+
     IntakeSubsystem intake;
     ExtensionSubsystem extension;
     OuttakeSubsystem outtake;
@@ -41,6 +47,10 @@ public class SoloTeleOp extends CommandOpMode {
     @Override
     public void initialize() {
         robot.init(hardwareMap);
+
+        Constants.setConstants(FConstants.class, LConstants.class);
+        follower = new Follower(hardwareMap);
+        follower.startTeleopDrive();
 
         //DELETE LATER=======
         robot.resetExtension();
@@ -69,7 +79,7 @@ public class SoloTeleOp extends CommandOpMode {
                 .whenPressed(() -> schedule(
                         new SequentialCommandGroup(
                                 new InstantCommand(() -> outtake.setPosition(OuttakeSubsystem.OuttakePosition.BASKET)),
-                                new LiftCommand(outtake, 2800)
+                                new LiftCommand(outtake, Globals.LIFT_BASKET_HIGH)
                         )));
         gamepadEx.getGamepadButton(GamepadKeys.Button.Y)
                         .whenPressed(() -> schedule(
@@ -126,14 +136,15 @@ public class SoloTeleOp extends CommandOpMode {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
+
+
+
     @Override
     public void run() {
-        super.run();
+        follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, false);
+        follower.update();
 
-        robot.leftFront.setPower(-gamepadEx.getLeftY());
-        robot.rightFront.setPower(-gamepadEx.getRightY());
-        robot.leftBack.setPower(-gamepadEx.getLeftY());
-        robot.rightBack.setPower(-gamepadEx.getRightY());
+        super.run();
 
         extension.read();
         extension.loop();
@@ -143,9 +154,9 @@ public class SoloTeleOp extends CommandOpMode {
         outtake.loop();
         outtake.write();
 
-        telemetry.addData("Target Position", extension.target);
-        telemetry.addData("Current Position", robot.extensionMotor.getCurrentPosition());
-        telemetry.addData("At Position", extension.atPosition());
+        telemetry.addData("Target Position", outtake.liftTarget);
+        telemetry.addData("Current Position", robot.outtakeLiftBottom.getCurrentPosition());
+        telemetry.addData("At Position", outtake.atPosition());
 
         telemetry.addData("lift pos", outtake.getLiftPosition());
 

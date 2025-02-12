@@ -21,4 +21,10 @@ public class Globals {
     public static double OUTTAKE_WRIST_NUETRAL = 0.0;
     public static double OUTTAKE_WRIST_BASKET = 0.76;
     public static double OUTTAKE_WRIST_SPECIMEN = 0.95;
+
+
+    public static int LIFT_BASKET_HIGH = 2800;
+    public static int LIFT_BASKET_LOW = 1600;
+    public static int LIFT_CHAMBER_HIGH = 0;
+    public static int LIFT_CHAMBER_LOW = 0;
 }
