@@ -48,6 +48,8 @@ public class ExtensionSubsystem extends SubsystemBase {
                 else if (target > current)
                     setMaxPower(0.5);
             }
+        } else {
+            power = 0;
         }
 
         controller.setPID(kP, kI, kD);
@@ -74,6 +76,10 @@ public class ExtensionSubsystem extends SubsystemBase {
     }
 
     public int getCurrent() {
+        return current;
+    }
+
+    public int getPosition() {
         return current;
     }
 }

@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.opmode.testing;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -11,12 +10,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.common.Globals;
 import org.firstinspires.ftc.teamcode.common.Hardware;
-import org.firstinspires.ftc.teamcode.common.subsystem.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.common.subsystem.OuttakeSubsystem;
 
 @Config
 @TeleOp(group = "Testing")
-public class FourbarTuner extends OpMode {
+public class OuttakeTuner extends OpMode {
 
     Hardware robot = Hardware.getInstance();
     OuttakeSubsystem outtake;

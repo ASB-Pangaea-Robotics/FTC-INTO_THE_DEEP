@@ -155,10 +155,8 @@ public class SoloTeleOp extends CommandOpMode {
         outtake.write();
 
         telemetry.addData("Target Position", outtake.liftTarget);
-        telemetry.addData("Current Position", robot.outtakeLiftBottom.getCurrentPosition());
+        telemetry.addData("Current Position", outtake.getLiftPosition());
         telemetry.addData("At Position", outtake.atPosition());
-
-        telemetry.addData("lift pos", outtake.getLiftPosition());
 
         telemetry.addData("Is Intaking", Globals.IS_INTAKING);
 
