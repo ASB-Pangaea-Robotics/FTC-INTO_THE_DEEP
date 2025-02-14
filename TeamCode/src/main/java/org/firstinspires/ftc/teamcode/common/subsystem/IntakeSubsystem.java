@@ -32,8 +32,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void setFourbar(double angle) {
-        robot.intakeFourbarLeft.setPosition(angle);
-        robot.intakeFourbarRight.setPosition(angle);
+        robot.intakeFourbar.setPosition(angle);
     }
 
     public boolean hasSample() {

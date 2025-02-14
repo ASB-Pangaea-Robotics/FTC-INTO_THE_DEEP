@@ -27,22 +27,18 @@ public class ServoTuner extends OpMode {
 
         gamepadEx = new GamepadEx(gamepad1);
 
-        robot.intakeFourbarLeft.setPosition(0);
-        robot.intakeFourbarRight.setPosition(0);
+        robot.intakeFourbar.setPosition(0);
 
         gamepadEx.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                .whenPressed(new InstantCommand(() -> intake.setFourbar(robot.intakeFourbarRight.getPosition() + 0.02)));
+                .whenPressed(new InstantCommand(() -> intake.setFourbar(robot.intakeFourbar.getPosition() + 0.02)));
         gamepadEx.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whenPressed(new InstantCommand(() -> intake.setFourbar(robot.intakeFourbarRight.getPosition() - 0.02)));
-
-        gamepadEx.getGamepadButton(GamepadKeys.Button.X)
-                .whenPressed(new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_INTAKE +0.2)));
+                .whenPressed(new InstantCommand(() -> intake.setFourbar(robot.intakeFourbar.getPosition() - 0.02)));
     }
 
     @Override
     public void loop() {
         CommandScheduler.getInstance().run();
-        telemetry.addData("Servo Position: ", robot.intakeFourbarRight.getPosition());
+        telemetry.addData("Servo Position: ", robot.intakeFourbar.getPosition());
         telemetry.update();
     }
 }
