@@ -26,7 +26,7 @@ public class OuttakeSubsystem extends SubsystemBase {
     public static double kP = 0.0085;
     public static double kI = 0.0;
     public static double kD = 0.0;
-    public static double kG = 0.002;
+    public static double kG = 0.05;
 
     private int liftCurrent = 0;
     public int liftTarget = 0;

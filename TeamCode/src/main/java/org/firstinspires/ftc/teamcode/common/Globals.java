@@ -13,14 +13,14 @@ public class Globals {
     public static double OUTTAKE_CLAW_OPEN = 1.0;
     public static double OUTTAKE_CLAW_CLOSED = 0.74;
 
-    public static double OUTTAKE_FOURBAR_NUETRAL = 0.35;
-    public static double OUTTAKE_FOURBAR_TRANSFER = 0.06;
-    public static double OUTTAKE_FOURBAR_BASKET = 0.62;
-    public static double OUTTAKE_FOURBAR_SPECIMEN = 0.92;
+    public static double OUTTAKE_FOURBAR_NUETRAL = 0;
+    public static double OUTTAKE_FOURBAR_TRANSFER = 0;
+    public static double OUTTAKE_FOURBAR_BASKET = 0;
+    public static double OUTTAKE_FOURBAR_SPECIMEN = 0;
 
-    public static double OUTTAKE_WRIST_NUETRAL = 0.0;
-    public static double OUTTAKE_WRIST_BASKET = 0.76;
-    public static double OUTTAKE_WRIST_SPECIMEN = 0.95;
+    public static double OUTTAKE_WRIST_NUETRAL = 0;
+    public static double OUTTAKE_WRIST_BASKET = 0;
+    public static double OUTTAKE_WRIST_SPECIMEN = 0;
 
 
     public static int LIFT_BASKET_HIGH = 2800;
