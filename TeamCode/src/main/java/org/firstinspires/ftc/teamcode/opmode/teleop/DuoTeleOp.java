@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class DuoTeleOp extends CommandOpMode {
 
     private double lastLoop = 0;
+    boolean slow = false;
 
     Hardware robot = Hardware.getInstance();
 
@@ -52,9 +53,17 @@ public class DuoTeleOp extends CommandOpMode {
     public void initialize() {
         robot.init(hardwareMap);
 
+
         Constants.setConstants(FConstants.class, LConstants.class);
         follower = new Follower(hardwareMap);
         follower.startTeleopDrive();
+
+        if(slow){
+            follower.setMaxPower(0.5);
+        }
+        else{
+            follower.setMaxPower(1.0);
+        }
 
         extension = new ExtensionSubsystem();
         intake = new IntakeSubsystem();
@@ -111,6 +120,7 @@ public class DuoTeleOp extends CommandOpMode {
         driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenPressed(() -> schedule(new ScoreSpecimenCommand(outtake)));
 
+
         driver.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(() -> schedule(new SequentialCommandGroup(
                         new InstantCommand(outtake::closeClaw),
@@ -122,6 +132,8 @@ public class DuoTeleOp extends CommandOpMode {
 
         driver.getGamepadButton(GamepadKeys.Button.START)
                 .whenPressed(() -> schedule(new ResetCommand(intake, extension, outtake)));
+
+
 
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -146,6 +158,14 @@ public class DuoTeleOp extends CommandOpMode {
         outtake.read();
         outtake.loop();
         outtake.write();
+
+
+        if(driver.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) <= 0.5){
+            follower.setMaxPower(0.5);
+        } else {
+            follower.setMaxPower(1);
+        }
+
 
         telemetry.addData("Target Position", outtake.liftTarget);
         telemetry.addData("Current Position", outtake.getLiftPosition());
