@@ -17,11 +17,13 @@ public class TransferCommand extends SequentialCommandGroup {
                         new SequentialCommandGroup(
                                 new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_TRANSFER)),
                                 new WaitCommand(500),
+                                new InstantCommand(() -> intake.setIntakePower(0.3)),
                                 new InstantCommand(intake::runIntake),
-                                new WaitCommand(500),
+                                new WaitCommand(700),
+                                new InstantCommand(() -> intake.setIntakePower(1)),
                                 new InstantCommand(intake::stopIntake),
                                 new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_NUETRAL)),
-                                new WaitCommand(200)
+                                new WaitCommand(100)
                         ),
                         new WaitCommand(0),
                         intake::hasSample
@@ -29,7 +31,7 @@ public class TransferCommand extends SequentialCommandGroup {
                 new InstantCommand(outtake::openClaw),
                 new WaitCommand(200),
                 new InstantCommand(() -> outtake.setFourbar(Globals.OUTTAKE_FOURBAR_TRANSFER)),
-                new WaitCommand(400),
+                new WaitCommand(300),
                 new InstantCommand(outtake::closeClaw),
                 new WaitCommand(300),
                 new InstantCommand(() -> outtake.setFourbar(Globals.OUTTAKE_FOURBAR_NUETRAL))

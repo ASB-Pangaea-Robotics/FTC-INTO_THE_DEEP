@@ -15,14 +15,14 @@ public class ExtensionSubsystem extends SubsystemBase {
 
     PIDController controller;
 
-    public static double kP = 0.011;
+    public static double kP = 0.0078;
     public static double kI = 0.0;
-    public static double kD = 0.0006;
+    public static double kD = 0.0005;
 
     private int current = 0;
     public int target = 0;
 
-    private final int tolerance = 5;
+    private final int tolerance = 8;
 
     private double power = 0;
     private double MAX_POWER = 0.3;
@@ -41,7 +41,7 @@ public class ExtensionSubsystem extends SubsystemBase {
                 if (target < current)
                     setMaxPower(0.5);
                 else if (target > current)
-                    setMaxPower(0.3);
+                    setMaxPower(0.4);
             } else {
                 if (target < current)
                     setMaxPower(0.6);
@@ -79,7 +79,7 @@ public class ExtensionSubsystem extends SubsystemBase {
         return current;
     }
 
-    public int getPosition() {
-        return current;
+    public int getTarget() {
+        return target;
     }
 }

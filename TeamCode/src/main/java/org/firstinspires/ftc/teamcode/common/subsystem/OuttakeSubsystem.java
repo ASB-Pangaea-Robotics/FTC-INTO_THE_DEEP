@@ -16,6 +16,7 @@ public class OuttakeSubsystem extends SubsystemBase {
     public enum OuttakePosition {
         NUETRAL,
         TRANSFER,
+        PREBASKET,
         BASKET,
         SPECIMEN
     }
@@ -23,15 +24,15 @@ public class OuttakeSubsystem extends SubsystemBase {
     // Lift systems
     private PIDController controller;
 
-    public static double kP = 0.0085;
+    public static double kP = 0.0091;
     public static double kI = 0.0;
-    public static double kD = 0.0;
-    public static double kG = 0.05;
+    public static double kD = 0.0003;
+    public static double kG = 0.06;
 
     private int liftCurrent = 0;
     public int liftTarget = 0;
 
-    private final int tolerance = 6;
+    private final int tolerance = 12;
 
     public double power = 0.0;
     private double MAX_POWER = 1;
@@ -102,6 +103,10 @@ public class OuttakeSubsystem extends SubsystemBase {
 
     public int getLiftPosition() {
         return liftCurrent;
+    }
+
+    public int getTargetPosition() {
+        return liftTarget;
     }
 
     public boolean atPosition() {

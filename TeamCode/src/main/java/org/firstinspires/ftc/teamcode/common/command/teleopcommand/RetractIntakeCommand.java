@@ -12,9 +12,10 @@ import org.firstinspires.ftc.teamcode.common.subsystem.IntakeSubsystem;
 public class RetractIntakeCommand extends SequentialCommandGroup {
     public RetractIntakeCommand(ExtensionSubsystem extension, IntakeSubsystem intake) {
         addCommands(
+                new InstantCommand(intake::stopIntake),
                 new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_NUETRAL)),
                 new WaitCommand(300),
-                new ExtensionCommand(extension, 0)
+                new ExtensionCommand(extension, -10)
         );
     }
 }

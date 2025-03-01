@@ -12,17 +12,24 @@ import org.firstinspires.ftc.teamcode.common.subsystem.ExtensionSubsystem;
 import org.firstinspires.ftc.teamcode.common.subsystem.IntakeSubsystem;
 
 public class CloseIntakeCommand extends SequentialCommandGroup {
-    public CloseIntakeCommand(IntakeSubsystem intake, ExtensionSubsystem extension) {
+    public CloseIntakeCommand(IntakeSubsystem intake, boolean wait) {
         if (!intake.hasSample()) {
-            addCommands(
-                    new InstantCommand(() -> Globals.IS_INTAKING = true),
-                    new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_INTAKE)),
-                    new InstantCommand(intake::runIntake),
-                    new WaitUntilCommand(intake::hasSample),
-                    new InstantCommand(() -> Globals.IS_INTAKING = false),
-                    new InstantCommand(intake::stopIntake),
-                    new RetractIntakeCommand(extension, intake)
-            );
+            if (wait) {
+                addCommands(
+                        new InstantCommand(() -> Globals.IS_INTAKING = true),
+                        new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_INTAKE)),
+                        new InstantCommand(intake::runIntake),
+                        new WaitUntilCommand(intake::hasSample),
+                        new InstantCommand(() -> Globals.IS_INTAKING = false),
+                        new InstantCommand(intake::stopIntake)
+                );
+            } else {
+                addCommands(
+                        new InstantCommand(() -> Globals.IS_INTAKING = true),
+                        new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_INTAKE)),
+                        new InstantCommand(intake::runIntake)
+                );
+            }
         }
     }
 }

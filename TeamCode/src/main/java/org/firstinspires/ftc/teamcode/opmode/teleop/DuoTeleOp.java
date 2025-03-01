@@ -14,10 +14,13 @@ import org.firstinspires.ftc.teamcode.common.Globals;
 import org.firstinspires.ftc.teamcode.common.Hardware;
 import org.firstinspires.ftc.teamcode.common.command.commoncommand.ExpelCommand;
 import org.firstinspires.ftc.teamcode.common.command.commoncommand.TransferCommand;
+import org.firstinspires.ftc.teamcode.common.command.commoncommand.BasketCommand;
 import org.firstinspires.ftc.teamcode.common.command.subsystemcommand.ExtensionCommand;
 import org.firstinspires.ftc.teamcode.common.command.commoncommand.CloseIntakeCommand;
 import org.firstinspires.ftc.teamcode.common.command.subsystemcommand.LiftCommand;
 import org.firstinspires.ftc.teamcode.common.command.teleopcommand.ResetCommand;
+import org.firstinspires.ftc.teamcode.common.command.teleopcommand.scoring.ScoreBasketCommand;
+import org.firstinspires.ftc.teamcode.common.command.teleopcommand.scoring.ScoreSpecimenCommand;
 import org.firstinspires.ftc.teamcode.common.subsystem.ExtensionSubsystem;
 import org.firstinspires.ftc.teamcode.common.subsystem.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.common.subsystem.OuttakeSubsystem;
@@ -29,8 +32,8 @@ import com.pedropathing.util.Constants;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @Config
-@TeleOp(name = "Solo", group = "TeleOp")
-public class SoloTeleOp extends CommandOpMode {
+@TeleOp(name = "Duo", group = "TeleOp")
+public class DuoTeleOp extends CommandOpMode {
 
     private double lastLoop = 0;
 
@@ -42,7 +45,8 @@ public class SoloTeleOp extends CommandOpMode {
     ExtensionSubsystem extension;
     OuttakeSubsystem outtake;
 
-    GamepadEx gamepadEx;
+    GamepadEx driver;
+    GamepadEx operator;
 
     @Override
     public void initialize() {
@@ -52,85 +56,72 @@ public class SoloTeleOp extends CommandOpMode {
         follower = new Follower(hardwareMap);
         follower.startTeleopDrive();
 
-        //DELETE LATER=======
-        robot.resetExtension();
-        robot.resetLift();
-        //===================
-
         extension = new ExtensionSubsystem();
         intake = new IntakeSubsystem();
         outtake = new OuttakeSubsystem();
 
-        gamepadEx = new GamepadEx(gamepad1);
+        driver = new GamepadEx(gamepad1);
+        operator = new GamepadEx(gamepad2);
 
         schedule(new InstantCommand(() -> outtake.setPosition(OuttakeSubsystem.OuttakePosition.NUETRAL)));
         schedule(new InstantCommand(() -> intake.setFourbar(Globals.INTAKE_FOURBAR_NUETRAL)));
         schedule(new ExtensionCommand(extension, -2));
         schedule(new LiftCommand(outtake, 5));
 
-        gamepadEx.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+        operator.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+                .whenPressed(() -> schedule(new ExtensionCommand(extension, extension.getCurrent() + 100)));
+        operator.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+                .whenPressed(() -> schedule(new ExtensionCommand(extension, extension.getCurrent() - 100)));
+
+
+        operator.getGamepadButton(GamepadKeys.Button.X)
                 .whenPressed(() -> schedule(new CloseIntakeCommand(intake, true)));
-        gamepadEx.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+        operator.getGamepadButton(GamepadKeys.Button.Y)
                 .whenPressed(() -> schedule(new ExpelCommand(intake)));
-
-        gamepadEx.getGamepadButton(GamepadKeys.Button.A)
+        operator.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(() -> schedule(new TransferCommand(intake, outtake)));
-        gamepadEx.getGamepadButton(GamepadKeys.Button.X)
-                .whenPressed(() -> schedule(
-                        new SequentialCommandGroup(
-                                new InstantCommand(() -> outtake.setPosition(OuttakeSubsystem.OuttakePosition.BASKET)),
-                                new LiftCommand(outtake, Globals.LIFT_BASKET_HIGH)
-                        )));
-        gamepadEx.getGamepadButton(GamepadKeys.Button.Y)
-                        .whenPressed(() -> schedule(
-                                new SequentialCommandGroup(
-                                        new InstantCommand(outtake::openClaw),
-                                        new WaitCommand(300),
-                                        new InstantCommand(() -> outtake.setPosition(OuttakeSubsystem.OuttakePosition.NUETRAL)),
-                                        new WaitCommand(300),
-                                        new LiftCommand(outtake, 0),
-                                        new InstantCommand(outtake::closeClaw)
-                                )));
+        operator.getGamepadButton(GamepadKeys.Button.B)
+                        .whenPressed(() -> schedule(new BasketCommand(outtake, Globals.LIFT_BASKET_HIGH)));
+
+        operator.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
+                .whenPressed(() -> schedule(new SequentialCommandGroup(
+                        new InstantCommand(() -> outtake.setPosition(OuttakeSubsystem.OuttakePosition.SPECIMEN)),
+                        new WaitCommand(500),
+                        new InstantCommand(outtake::openClaw)
+                )));
+        operator.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+                .whenPressed(() -> schedule(new SequentialCommandGroup(
+                        new InstantCommand(() -> outtake.setFourbar(0.62)),
+                        new InstantCommand(() -> outtake.setWrist(0.26)),
+                        new LiftCommand(outtake, Globals.LIFT_CHAMBER_HIGH)
+                )));
 
 
-//        gamepadEx.getGamepadButton(GamepadKeys.Button.X)
-//                        .toggleWhenActive(
-//                                new SequentialCommandGroup(
-//                                        new InstantCommand(() -> outtake.setPosition(OuttakeSubsystem.OuttakePosition.SPECIMEN)),
-//                                        new InstantCommand(outtake::openClaw)
-//                                ),
-//                                new SequentialCommandGroup(
-//                                        new InstantCommand(outtake::closeClaw),
-//                                        new WaitCommand(500),
-//                                        new InstantCommand(() -> outtake.setPosition(OuttakeSubsystem.OuttakePosition.NUETRAL))
-//                                )
-//                        );
-//        gamepadEx.getGamepadButton(GamepadKeys.Button.Y)
-//                        .whenPressed(() -> schedule(
-//                                new SequentialCommandGroup(
-//                                        new InstantCommand(outtake::closeClaw),
-//                                        new WaitCommand(500),
-//                                        new InstantCommand(() -> outtake.setPosition(OuttakeSubsystem.OuttakePosition.NUETRAL))
-//                                )
-//                        ));
-
-        gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
-                .whenPressed(() -> schedule(new ExtensionCommand(extension, -2)));
-        gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
-                .whenPressed(() -> schedule(new ExtensionCommand(extension, 150)));
-        gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_UP)
-                .whenPressed(() -> schedule(new ExtensionCommand(extension, 300)));
-        gamepadEx.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
-                .whenPressed(() -> schedule(new ExtensionCommand(extension, 500)));
-
-        gamepadEx.getGamepadButton(GamepadKeys.Button.START)
+        operator.getGamepadButton(GamepadKeys.Button.START)
                 .whenPressed(() -> schedule(new ResetCommand(intake, extension, outtake)));
-        gamepadEx.getGamepadButton(GamepadKeys.Button.BACK)
+        operator.getGamepadButton(GamepadKeys.Button.BACK)
                 .whenPressed(() -> schedule(new SequentialCommandGroup(
                         new ExtensionCommand(extension, -1000),
                         new WaitCommand(1000),
                         new InstantCommand(() -> robot.resetExtension())
                 )));
+
+        driver.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+                .whenPressed(() -> schedule(new ScoreBasketCommand(outtake)));
+        driver.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+                .whenPressed(() -> schedule(new ScoreSpecimenCommand(outtake)));
+
+        driver.getGamepadButton(GamepadKeys.Button.A)
+                .whenPressed(() -> schedule(new SequentialCommandGroup(
+                        new InstantCommand(outtake::closeClaw),
+                        new InstantCommand(() -> outtake.setWrist(Globals.OUTTAKE_WRIST_SPECIMEN)),
+                        new WaitCommand(200),
+                        new InstantCommand(() -> outtake.setFourbar(0.46)),
+                        new InstantCommand(() -> outtake.setWrist(0.46))
+                )));
+
+        driver.getGamepadButton(GamepadKeys.Button.START)
+                .whenPressed(() -> schedule(new ResetCommand(intake, extension, outtake)));
 
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -141,6 +132,8 @@ public class SoloTeleOp extends CommandOpMode {
 
     @Override
     public void run() {
+
+
         follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, false);
         follower.update();
 
@@ -159,6 +152,9 @@ public class SoloTeleOp extends CommandOpMode {
         telemetry.addData("At Position", outtake.atPosition());
 
         telemetry.addData("Is Intaking", Globals.IS_INTAKING);
+
+        telemetry.addData("extension pos", extension.getCurrent());
+
 
         double loop = System.nanoTime();
         telemetry.addData("hz", 1000000000 / (loop - lastLoop));

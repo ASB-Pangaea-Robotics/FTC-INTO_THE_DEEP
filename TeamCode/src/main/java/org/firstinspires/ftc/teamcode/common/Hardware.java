@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -20,10 +21,10 @@ public class Hardware {
 
 
     //Drivetrain
-    public DcMotorEx leftFront;
-    public DcMotorEx rightFront;
-    public DcMotorEx leftBack;
-    public DcMotorEx rightBack;
+//    public DcMotorEx leftFront;
+//    public DcMotorEx rightFront;
+//    public DcMotorEx leftBack;
+//    public DcMotorEx rightBack;
 
     //Extension
     public MotorEx extensionMotor;
@@ -65,8 +66,9 @@ public class Hardware {
         //Intake Config
         intakeLeft = hardwareMap.get(CRServo.class, "intakeLeft");
         intakeRight = hardwareMap.get(CRServo.class, "intakeRight");
+        intakeLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        intakeFourbar = hardwareMap.get(Servo.class, "intakeFourbarLeft");
+        intakeFourbar = hardwareMap.get(Servo.class, "intakeFourbar");
         intakeFourbar.setDirection(Servo.Direction.REVERSE);
 
         intakeBreak = hardwareMap.get(DigitalChannel.class, "intakeBreak");
@@ -77,7 +79,7 @@ public class Hardware {
         outtakeFourbar = hardwareMap.get(Servo.class, "outtakeFourbar");
         outtakeWrist = hardwareMap.get(Servo.class, "outtakeWrist");
 
-        outtakeWrist.setDirection(Servo.Direction.REVERSE);
+        outtakeFourbar.setDirection(Servo.Direction.REVERSE);
 
         outtakeLiftTop = new MotorEx(hardwareMap, "outtakeLiftTop");
         outtakeLiftBottom = new MotorEx(hardwareMap, "outtakeLiftBottom");
@@ -85,7 +87,7 @@ public class Hardware {
         outtakeLiftTop.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         outtakeLiftBottom.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 
-        outtakeLiftBottom.setInverted(true);
+        outtakeLiftTop.setInverted(true);
     }
 
     public void resetExtension() {

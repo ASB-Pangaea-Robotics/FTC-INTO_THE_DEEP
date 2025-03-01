@@ -11,7 +11,6 @@ import com.pedropathing.commands.FollowPath;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.localization.PoseUpdater;
-import com.pedropathing.pathgen.BezierCurve;
 import com.pedropathing.pathgen.BezierLine;
 import com.pedropathing.pathgen.Path;
 import com.pedropathing.pathgen.Point;
@@ -36,7 +35,7 @@ import org.firstinspires.ftc.teamcode.pedropathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedropathing.constants.LConstants;
 
 @Autonomous(group = "comp")
-public class BlueTwoPiece extends LinearOpMode {
+public class FourPiece extends LinearOpMode {
 
 
     Hardware robot = Hardware.getInstance();
@@ -54,9 +53,11 @@ public class BlueTwoPiece extends LinearOpMode {
     private final Pose startPose = new Pose(9, 111, Math.toRadians(270));
     private final Pose basketScorePose = new Pose(16, 127, Math.toRadians(315));
     private final Pose spike1Pose = new Pose(22, 118.5, Math.toRadians(0));
+    private final Pose spike2Pose = new Pose(22, 129.5, Math.toRadians(0));
+    private final Pose spike3Pose = new Pose(36.5, 119, Math.toRadians(70));
     private final Pose parkPose = new Pose(60, 100, Math.toRadians(-90));
 
-    public Path scorePreload, pickup1, score1;
+    public Path scorePreload, pickup1, score1, pickup2, score2, pickup3, score3;
 
 
     @Override
@@ -106,13 +107,25 @@ public class BlueTwoPiece extends LinearOpMode {
         score1 = new Path(new BezierLine(new Point(spike1Pose), new Point(basketScorePose)));
         score1.setLinearHeadingInterpolation(spike1Pose.getHeading(), basketScorePose.getHeading());
 
+        pickup2 = new Path(new BezierLine(new Point(basketScorePose), new Point(spike2Pose)));
+        pickup2.setLinearHeadingInterpolation(basketScorePose.getHeading(), spike2Pose.getHeading());
+
+        score2 = new Path(new BezierLine(new Point(spike2Pose), new Point(basketScorePose)));
+        score2.setLinearHeadingInterpolation(spike2Pose.getHeading(), basketScorePose.getHeading());
+
+        pickup3 = new Path(new BezierLine(new Point(basketScorePose), new Point(spike3Pose)));
+        pickup3.setLinearHeadingInterpolation(basketScorePose.getHeading(), spike3Pose.getHeading());
+
+        score3 = new Path(new BezierLine(new Point(spike3Pose), new Point(basketScorePose)));
+        score3.setLinearHeadingInterpolation(spike3Pose.getHeading(), basketScorePose.getHeading());
+
         CommandScheduler.getInstance().schedule(
                 new SequentialCommandGroup(
                         new ParallelCommandGroup(
                                 new FollowPath(
                                         follower,
                                         scorePreload,
-                                        0.8
+                                        1
                                 ),
                                 new BasketCommand(outtake, Globals.LIFT_BASKET_HIGH)
                         ),
@@ -120,31 +133,141 @@ public class BlueTwoPiece extends LinearOpMode {
                         new WaitCommand(200),
                         new ScoreBasketCommand(outtake),
                         new WaitUntilCommand(outtake::atPosition),
-                        new ExtensionCommand(extension, 100),
+                        new ExtensionCommand(extension, 80),
                         new WaitCommand(200),
                         new CloseIntakeCommand(intake, false),
+
                         new FollowPath(
                                 follower,
                                 pickup1,
-                                0.8
+                                0.9
                         ),
+                        new WaitCommand(200),
+
                         new ExtensionCommand(extension, 400),
                         new WaitUntilCommand(intake::hasSample),
                         new RetractIntakeCommand(extension, intake),
                         new WaitUntilCommand(extension::atPosition),
                         new TransferCommand(intake, outtake),
-                        new WaitCommand(500),
+
                         new ParallelCommandGroup(
                                 new BasketCommand(outtake, Globals.LIFT_BASKET_HIGH),
                                 new FollowPath(
                                         follower,
                                         score1,
+                                        1
+                                )
+                        ),
+
+                        new ScoreBasketCommand(outtake),
+                        new WaitCommand(300),
+                        new WaitUntilCommand(outtake::atPosition),
+
+                        //SECOND SAMPLE
+
+                        new ExtensionCommand(extension, 100),
+                        new WaitCommand(200),
+                        new CloseIntakeCommand(intake, false),
+
+                        new FollowPath(
+                                follower,
+                                pickup2,
+                                0.9
+                        ),
+                        new WaitCommand(200),
+                        new ExtensionCommand(extension, 400),
+                        new WaitUntilCommand(intake::hasSample),
+                        new RetractIntakeCommand(extension, intake),
+                        new WaitUntilCommand(extension::atPosition),
+                        new TransferCommand(intake, outtake),
+                        new WaitCommand(200),
+
+                        new ParallelCommandGroup(
+                                new BasketCommand(outtake, Globals.LIFT_BASKET_HIGH),
+                                new FollowPath(
+                                        follower,
+                                        score2,
+                                        1
+                                )
+                        ),
+
+                        new ScoreBasketCommand(outtake),
+                        new WaitCommand(300),
+                        new WaitUntilCommand(outtake::atPosition),
+                        new ExtensionCommand(extension, 100),
+                        new WaitCommand(200),
+                        new CloseIntakeCommand(intake, false),
+
+                        new FollowPath(
+                                follower,
+                                pickup3,
+                                0.9
+                        ),
+                        new WaitCommand(200),
+                        new ExtensionCommand(extension, 240),
+                        new WaitUntilCommand(intake::hasSample),
+                        new RetractIntakeCommand(extension, intake),
+                        new WaitUntilCommand(extension::atPosition),
+                        new TransferCommand(intake, outtake),
+                        new WaitCommand(200),
+
+                        new ParallelCommandGroup(
+                                new BasketCommand(outtake, Globals.LIFT_BASKET_HIGH),
+                                new FollowPath(
+                                        follower,
+                                        score3,
                                         0.8
                                 )
                         ),
-                        new ScoreBasketCommand(outtake),
-                        new WaitCommand(1000),
-                        new WaitUntilCommand(outtake::atPosition)
+                        new WaitCommand(200),
+
+
+                        new ScoreBasketCommand(outtake)
+
+
+
+//                        new FollowPath(
+//                                follower,
+//                                scorePreload,
+//                                0.5
+//                        ),
+//                        new WaitCommand(2000),
+//                        new FollowPath(
+//                                follower,
+//                                pickup1,
+//                                0.5
+//                        ),
+//                        new WaitCommand(2000),
+//                        new FollowPath(
+//                                follower,
+//                                score1,
+//                                0.5
+//                        ),
+//                        new WaitCommand(2000),
+//                        new FollowPath(
+//                                follower,
+//                                pickup2,
+//                                0.5
+//                        ),
+//                        new WaitCommand(2000),
+//                        new FollowPath(
+//                                follower,
+//                                score2,
+//                                0.5
+//                        ),
+//                        new WaitCommand(2000),
+//                        new FollowPath(
+//                                follower,
+//                                pickup3,
+//                                0.5
+//                        ),
+//                        new WaitCommand(5000),
+//                        new FollowPath(
+//                                follower,
+//                                score3,
+//                                0.5
+//                        ),
+//                        new WaitCommand(2000)
                 )
         );
 

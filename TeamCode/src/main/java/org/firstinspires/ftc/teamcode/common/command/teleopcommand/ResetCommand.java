@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.common.subsystem.OuttakeSubsystem;
 public class ResetCommand extends ParallelCommandGroup {
     public ResetCommand(IntakeSubsystem intake, ExtensionSubsystem extension, OuttakeSubsystem outtake) {
         addCommands(
+                new InstantCommand(outtake::closeClaw),
                 new RetractIntakeCommand(extension, intake),
                 new InstantCommand(intake::stopIntake),
                 new LiftCommand(outtake, 0),

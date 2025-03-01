@@ -9,6 +9,7 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.common.Globals;
@@ -25,6 +26,7 @@ import org.firstinspires.ftc.teamcode.common.subsystem.ExtensionSubsystem;
 import org.firstinspires.ftc.teamcode.common.subsystem.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.common.subsystem.OuttakeSubsystem;
 
+@Disabled
 @Config
 @TeleOp(group = "TeleOp")
 public class SpecimenTesting extends CommandOpMode {
@@ -85,10 +87,10 @@ public class SpecimenTesting extends CommandOpMode {
     public void run() {
         super.run();
 
-        robot.leftFront.setPower(-gamepadEx.getLeftY());
-        robot.rightFront.setPower(-gamepadEx.getRightY());
-        robot.leftBack.setPower(-gamepadEx.getLeftY());
-        robot.rightBack.setPower(-gamepadEx.getRightY());
+//        robot.leftFront.setPower(-gamepadEx.getLeftY());
+//        robot.rightFront.setPower(-gamepadEx.getRightY());
+//        robot.leftBack.setPower(-gamepadEx.getLeftY());
+//        robot.rightBack.setPower(-gamepadEx.getRightY());
 
         outtake.read();
         outtake.loop();

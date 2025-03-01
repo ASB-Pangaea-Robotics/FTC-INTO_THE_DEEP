@@ -35,6 +35,10 @@ public class IntakeSubsystem extends SubsystemBase {
         robot.intakeFourbar.setPosition(angle);
     }
 
+    public void setIntakePower(double power) {
+        this.intakePower = power;
+    }
+
     public boolean hasSample() {
         return !robot.intakeBreak.getState();
     }
